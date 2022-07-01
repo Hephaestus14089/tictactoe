@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import Square from './Square';
 
-
-
 const Board = (i) => {
 
   const [state, setState] = useState(Array(9).fill(null));
