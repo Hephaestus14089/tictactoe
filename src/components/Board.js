@@ -3,7 +3,8 @@ import Square from './Square';
 
 const Board = (i) => {
 
-  const [state, setState] = useState(Array(9).fill(null));
+  const [state, setState] = useState(Array(9).fill(' '));
+  const [nextPlayer, setNextPlayer] = useState('X');
 
   const renderSquare = (i) => {
     return <Square
@@ -11,7 +12,8 @@ const Board = (i) => {
              key={i}
              onClick={() => {
                let newState = [...state];
-               newState[i - 1] = "X";
+               newState[i - 1] = nextPlayer;
+               setNextPlayer(nextPlayer === 'X' ? 'O' : 'X');
                setState(newState);
              }}
            />
@@ -29,6 +31,7 @@ const Board = (i) => {
           <div
             className="row"
             key={i}
+            style={{ 'margin': "0", 'padding': "0" }}
           >
             {row}
           </div>
@@ -39,7 +42,10 @@ const Board = (i) => {
     } // end of for loop
 
     return (
-      <div className="board">
+      <div
+        className="board"
+        style={{ 'margin': "0", 'padding': "0" }}
+      >
         {rows}
       </div>
     );
