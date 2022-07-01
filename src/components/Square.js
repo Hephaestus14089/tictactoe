@@ -14,7 +14,7 @@ const Square = (props) => {
     <button
       className="square"
       style={style}
-      onClick={() => { props.onClick(); }}
+      onClick={() => { if (props.occupant === " ") props.onClick(); }}
     >
       {props.occupant}
     </button>
