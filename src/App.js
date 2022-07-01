@@ -2,10 +2,10 @@ import './App.css';
 import Board from './components/Board';
 
 const style = {
-  'margin-top': "15%",
+  'marginTop': "15%",
   'display': "flex",
-  'justify-content': "center",
-  'align-items': "center"
+  'justifyContent': "center",
+  'alignItems': "center"
 };
 
 function App() {
