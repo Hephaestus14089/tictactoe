@@ -5,6 +5,7 @@ const Board = (i) => {
 
   const [state, setState] = useState(Array(9).fill(null));
   const [nextPlayer, setNextPlayer] = useState('X');
+  const [moveCount, setMoveCount] = useState(0);
 
   const renderSquare = (i) => {
     return <Square
@@ -14,6 +15,7 @@ const Board = (i) => {
                let newState = [...state];
                newState[i - 1] = nextPlayer;
                setNextPlayer(nextPlayer === 'X' ? 'O' : 'X');
+               setMoveCount(moveCount + 1);
                setState(newState);
              }}
            />
@@ -41,6 +43,7 @@ const Board = (i) => {
       }
     } // end of for loop
 
+
     return (
       <div
         className="board"
@@ -52,7 +55,11 @@ const Board = (i) => {
   };
 
   const board = createBoard();
-  return board;
+  return (
+    <>
+      {board}
+    </>
+  );
 };
 
 export default Board;
