@@ -2,20 +2,39 @@ import { useState } from 'react';
 import Square from './Square';
 import { MidRightTray } from './Trays';
 
-const Board = (i) => {
+const Board = () => {
 
   const startingPlayer = 'X';
+
   const [state, setState] = useState(Array(9).fill(null));
   const [nextPlayer, setNextPlayer] = useState(startingPlayer);
   const [moveCount, setMoveCount] = useState(0);
   const [isMatchEnd, setIsMatchEnd] = useState(false);
+  const [winner, setWinner] = useState(null);
+
+ // const checkWin = (i) => {
+ //
+ // };
 
   const handleSquareClick = (i) => {
+    setMoveCount(moveCount + 1);
+    // modifying the state of the array representing the board
     let newState = [...state];
     newState[i - 1] = nextPlayer;
-    setNextPlayer(nextPlayer === 'X' ? 'O' : 'X');
-    setMoveCount(moveCount + 1);
     setState(newState);
+    // resetting next player
+    setNextPlayer(nextPlayer === 'X' ? 'O' : 'X');
+
+    // updating status of match
+    if (moveCount > 4) {
+      // checkWin(i);
+
+      if (winner !== null)
+        setIsMatchEnd(true);
+      else if (moveCount === 9)
+        setIsMatchEnd(true);
+    }
+
   };
 
   const renderSquare = (i) => {
@@ -69,6 +88,7 @@ const Board = (i) => {
         moves={moveCount}
         starter={startingPlayer}
         matchEnd={isMatchEnd}
+        winner={winner}
       />
     </>
   );

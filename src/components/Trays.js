@@ -5,7 +5,7 @@ const UpperTray = () => {
    */
 };
 
-const MidRightTray = ({ moves, starter, isMatchEnd }) => {
+const MidRightTray = ({ moves, starter, isMatchEnd, winner }) => {
   /*
    * TODO:
    * - Next Player / Winner / Draw
