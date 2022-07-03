@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import Square from './Square';
+import { MidRightTray } from './Trays';
 
 const Board = (i) => {
 
+  const startingPlayer = 'X';
   const [state, setState] = useState(Array(9).fill(null));
-  const [nextPlayer, setNextPlayer] = useState('X');
+  const [nextPlayer, setNextPlayer] = useState(startingPlayer);
   const [moveCount, setMoveCount] = useState(0);
+  const [isMatchEnd, setIsMatchEnd] = useState(false);
 
   const renderSquare = (i) => {
     return <Square
@@ -58,6 +61,11 @@ const Board = (i) => {
   return (
     <>
       {board}
+      <MidRightTray
+        moves={moveCount}
+        starter={startingPlayer}
+        matchEnd={isMatchEnd}
+      />
     </>
   );
 };
