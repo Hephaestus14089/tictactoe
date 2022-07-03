@@ -10,18 +10,22 @@ const Board = (i) => {
   const [moveCount, setMoveCount] = useState(0);
   const [isMatchEnd, setIsMatchEnd] = useState(false);
 
+  const handleSquareClick = (i) => {
+    let newState = [...state];
+    newState[i - 1] = nextPlayer;
+    setNextPlayer(nextPlayer === 'X' ? 'O' : 'X');
+    setMoveCount(moveCount + 1);
+    setState(newState);
+  };
+
   const renderSquare = (i) => {
-    return <Square
-             occupant={state[i - 1]}
-             key={i}
-             onClick={() => {
-               let newState = [...state];
-               newState[i - 1] = nextPlayer;
-               setNextPlayer(nextPlayer === 'X' ? 'O' : 'X');
-               setMoveCount(moveCount + 1);
-               setState(newState);
-             }}
-           />
+    return (
+      <Square
+        occupant={state[i - 1]}
+        key={i}
+        onClick={() => {handleSquareClick(i);}}
+      />
+    );
   };
 
   const createBoard = () => {
