@@ -12,22 +12,70 @@ const Board = () => {
   const [isMatchEnd, setIsMatchEnd] = useState(false);
   const [winner, setWinner] = useState(null);
 
- // const checkWin = (i) => {
- //
- // };
+  const checkWin = (i) => {
 
-  const handleSquareClick = (i) => {
+    const matchOccupant = (i, j) => state[j] !== state[i]
+
+    const verticalMatch = (i) => {
+
+      let j = i;
+      while (j >= 3) {
+        j -= 3;
+        if (!matchOccupant(i, j))
+          return false;
+      }
+
+      j = i;
+      while (j <= 5) {
+        j += 3;
+        if (!matchOccupant(i, j))
+          return false;
+      }
+
+      return true;
+    }; // end of verticalMatch()
+
+    const horizontalMatch = (i) => {
+
+      if (i % 3 === 0) {
+        if (matchOccupant(i, i + 1) && matchOccupant(i, i + 2))
+          return true;
+      }
+      else if (i % 2 !== 0) {
+        if (matchOccupant(i, i - 1) && matchOccupant(i, i + 1))
+          return true;
+      }
+      else {
+        if (matchOccupant(i, i - 1) && matchOccupant(i, i - 2))
+          return true;
+      }
+
+      return false;
+    }; // end of horizontalMatch()
+
+    if (verticalMatch(i) && horizontalMatch(i))
+      setWinner(state[i]);
+  };
+
+  const updateValues = (i) => {
     setMoveCount(moveCount + 1);
+    console.log(`mc: ${moveCount}`); // debug output
     // modifying the state of the array representing the board
     let newState = [...state];
     newState[i - 1] = nextPlayer;
     setState(newState);
     // resetting next player
     setNextPlayer(nextPlayer === 'X' ? 'O' : 'X');
+  };
+
+  const handleSquareClick = (i) => { // async: await checkWin()
+    // updating the values required for match status updation
+    updateValues(i);
 
     // updating status of match
     if (moveCount > 4) {
-      // checkWin(i);
+      console.log("reached!"); // debug output
+      checkWin(i);
 
       if (winner !== null)
         setIsMatchEnd(true);
@@ -40,8 +88,9 @@ const Board = () => {
   const renderSquare = (i) => {
     return (
       <Square
-        occupant={state[i - 1]}
         key={i}
+        occupant={state[i - 1]}
+        isMatchEnd={isMatchEnd}
         onClick={() => {handleSquareClick(i);}}
       />
     );
@@ -74,7 +123,7 @@ const Board = () => {
       <div
         className="board"
         style={{ 'margin': "0", 'padding': "0" }}
-      >
+     >
         {rows}
       </div>
     );

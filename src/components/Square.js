@@ -15,11 +15,17 @@ const style = {
 
 const Square = (props) => {
 
+  const isClickable = () => {
+    if (!props.isMatchEnd && props.occupant === null)
+      return true;
+    return false;
+  };
+
   return (
     <p
       className="square"
       style={style}
-      onClick={() => { if (props.occupant === null) props.onClick(); }}
+      onClick={() => { if (isClickable()) props.onClick(); }}
     >
       {props.occupant}
     </p>

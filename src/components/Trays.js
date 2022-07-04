@@ -29,7 +29,7 @@ const MidRightTray = ({ moves, starter, isMatchEnd, winner }) => {
     }
   } // end of outer if-else
 
-  const status = "";
+  const status = `${winner}, end? ${isMatchEnd}`;
 
   return (
     <div
