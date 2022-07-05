@@ -9,27 +9,36 @@ const MidRightTray = (props) => {
 
   const { moves, starter, nextPlayer, isMatchEnd, winner } = props;
 
-  let movesX = 0;
-  let movesO = 0;
+  const getMoves = () => {
+    let movesX = 0;
+    let movesO = 0;
 
-  if (moves % 2 === 0) {
-    movesX = Math.trunc(moves / 2);
-    movesO = movesX;
-  }
-  else {
-    if (starter === 'X') {
-      movesO = moves / 2 - 0.5;
-      movesX = movesO + 1;
+    if (moves % 2 === 0) {
+      movesX = Math.trunc(moves / 2);
+      movesO = movesX;
     }
     else {
-      movesX = moves / 2 - 0.5;
-      movesO = movesX + 1;
-    }
-  } // end of outer if-else
+      if (starter === 'X') {
+        movesO = moves / 2 - 0.5;
+        movesX = movesO + 1;
+      }
+      else {
+        movesX = moves / 2 - 0.5;
+        movesO = movesX + 1;
+      }
+    } // end of outer if-else
 
-  let status = `Next Player: ${nextPlayer}`;
-  if (isMatchEnd)
-    status = (winner !== null) ? `Match Winner: ${winner}` : "Match Draw"
+    return [movesX, movesO];
+  };
+
+  const getStatus = () => {
+    if (isMatchEnd)
+      return (winner !== null) ? `Match Winner: ${winner}` : "Match Draw";
+    return `Next Player: ${nextPlayer}`;
+  };
+
+  const [movesX, movesO] = getMoves();
+  const status = getStatus();
 
   return (
     <div
