@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Square from './Square';
 import { MidRightTray } from './Trays';
 
@@ -7,6 +7,7 @@ const Board = () => {
   const startingPlayer = 'X';
 
   const [state, setState] = useState(Array(9).fill(null));
+  const [prevIndex, setPrevIndex] = useState(null);
   const [nextPlayer, setNextPlayer] = useState(startingPlayer);
   const [moveCount, setMoveCount] = useState(0);
   const [isMatchEnd, setIsMatchEnd] = useState(false);
@@ -14,21 +15,21 @@ const Board = () => {
 
   const checkWin = (i) => {
 
-    const matchOccupant = (i, j) => state[j] !== state[i]
+    const matchOccupants = (i, j) => state[j] === state[i]
 
     const verticalMatch = (i) => {
 
       let j = i;
       while (j >= 3) {
         j -= 3;
-        if (!matchOccupant(i, j))
+        if (!matchOccupants(i, j))
           return false;
       }
 
       j = i;
       while (j <= 5) {
         j += 3;
-        if (!matchOccupant(i, j))
+        if (!matchOccupants(i, j))
           return false;
       }
 
@@ -36,60 +37,62 @@ const Board = () => {
     }; // end of verticalMatch()
 
     const horizontalMatch = (i) => {
-
-      if (i % 3 === 0) {
-        if (matchOccupant(i, i + 1) && matchOccupant(i, i + 2))
-          return true;
-      }
-      else if (i % 2 !== 0) {
-        if (matchOccupant(i, i - 1) && matchOccupant(i, i + 1))
-          return true;
-      }
-      else {
-        if (matchOccupant(i, i - 1) && matchOccupant(i, i - 2))
-          return true;
-      }
-
-      return false;
+      if (i % 3 === 0)
+        return (matchOccupants(i, i + 1) && matchOccupants(i, i + 2))
+      else if (i % 2 !== 0)
+        return (matchOccupants(i, i - 1) && matchOccupants(i, i + 1))
+      else
+        return (matchOccupants(i, i - 1) && matchOccupants(i, i - 2))
     }; // end of horizontalMatch()
 
-    if (verticalMatch(i) && horizontalMatch(i))
-      setWinner(state[i]);
+    const diagonalMatch = (i) => {
+      let flag = false;
+
+      [ // list of diagonal winning positions
+        [0, 4, 8],
+        [2, 4, 6]
+      ]
+        .forEach(winPos => {
+          if (!flag && (winPos.find(index => index === i) !== undefined))
+            flag = matchOccupants(winPos[0], winPos[1]) && matchOccupants(winPos[0], winPos[2]);
+        });
+
+      return flag;
+    };
+
+    if (verticalMatch(i) || horizontalMatch(i) || diagonalMatch(i)) setWinner(state[i]);
   };
 
-  const updateValues = (i) => {
-    setMoveCount(moveCount + 1);
-    console.log(`mc: ${moveCount}`); // debug output
-    // modifying the state of the array representing the board
-    let newState = [...state];
-    newState[i - 1] = nextPlayer;
-    setState(newState);
-    // resetting next player
-    setNextPlayer(nextPlayer === 'X' ? 'O' : 'X');
-  };
-
-  const handleSquareClick = (i) => { // async: await checkWin()
-    // updating the values required for match status updation
-    updateValues(i);
-
-    // updating status of match
+  useEffect(() => {
+     // updating status of match
     if (moveCount > 4) {
-      console.log("reached!"); // debug output
-      checkWin(i);
+      checkWin(prevIndex);
 
       if (winner !== null)
         setIsMatchEnd(true);
       else if (moveCount === 9)
         setIsMatchEnd(true);
     }
+  }, [moveCount, prevIndex, winner]);
 
+  const handleSquareClick = (i) => {
+    // updating the values required for match status updation
+    setMoveCount(moveCount + 1);
+    // modifying the state of the array representing the board
+    let newState = [...state];
+    newState[i] = nextPlayer;
+    setState(newState);
+    // resetting next player
+    setNextPlayer(nextPlayer === 'X' ? 'O' : 'X');
+    // resetting previous index
+    setPrevIndex(i);
   };
 
   const renderSquare = (i) => {
     return (
       <Square
         key={i}
-        occupant={state[i - 1]}
+        occupant={state[i]}
         isMatchEnd={isMatchEnd}
         onClick={() => {handleSquareClick(i);}}
       />
@@ -101,7 +104,7 @@ const Board = () => {
     let row = [];
 
     for (let i = 1; i <= 9; i++) {
-      row.push(renderSquare(i));
+      row.push(renderSquare(i - 1));
 
       if (i % 3 === 0) {
         rows.push(
@@ -136,7 +139,7 @@ const Board = () => {
       <MidRightTray
         moves={moveCount}
         starter={startingPlayer}
-        matchEnd={isMatchEnd}
+        isMatchEnd={isMatchEnd}
         winner={winner}
       />
     </>
