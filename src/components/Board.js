@@ -149,6 +149,7 @@ const Board = () => {
       <MidRightTray
         moves={moveCount}
         starter={startingPlayer}
+        nextPlayer={nextPlayer}
         isMatchEnd={isMatchEnd}
         winner={winner}
       />

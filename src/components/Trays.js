@@ -5,11 +5,9 @@ const UpperTray = () => {
    */
 };
 
-const MidRightTray = ({ moves, starter, isMatchEnd, winner }) => {
-  /*
-   * TODO:
-   * - Next Player / Winner / Draw
-   */
+const MidRightTray = (props) => {
+
+  const { moves, starter, nextPlayer, isMatchEnd, winner } = props;
 
   let movesX = 0;
   let movesO = 0;
@@ -29,14 +27,16 @@ const MidRightTray = ({ moves, starter, isMatchEnd, winner }) => {
     }
   } // end of outer if-else
 
-  const status = `${winner}, end? ${isMatchEnd}`;
+  let status = `Next Player: ${nextPlayer}`;
+  if (isMatchEnd)
+    status = (winner !== null) ? `Match Winner: ${winner}` : "Match Draw"
 
   return (
     <div
       className="midRightTray"
       style={{
         'marginLeft': "60px",
-        'padding': "25px 40px",
+        'padding': "14px 40px",
         'border': "3px dotted #000"
       }}
     >
@@ -46,8 +46,14 @@ const MidRightTray = ({ moves, starter, isMatchEnd, winner }) => {
         <h2>X: {movesX}</h2>
         <h2>O: {movesO}</h2>
       </div>
-      <div className="status">
-        <p>{status}</p>
+      <div
+        className="status"
+        style={{
+          'paddingTop': "0px",
+          'borderTop': "3px dotted #000"
+        }}
+      >
+        <h2>{status}</h2>
       </div>
     </div>
   );
