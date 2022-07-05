@@ -17,50 +17,60 @@ const Board = () => {
 
     const matchOccupants = (i, j) => state[j] === state[i]
 
-    const verticalMatch = (i) => {
-
-      let j = i;
-      while (j >= 3) {
-        j -= 3;
-        if (!matchOccupants(i, j))
-          return false;
-      }
-
-      j = i;
-      while (j <= 5) {
-        j += 3;
-        if (!matchOccupants(i, j))
-          return false;
-      }
-
-      return true;
-    }; // end of verticalMatch()
-
-    const horizontalMatch = (i) => {
-      if (i % 3 === 0)
-        return (matchOccupants(i, i + 1) && matchOccupants(i, i + 2))
-      else if (i % 2 !== 0)
-        return (matchOccupants(i, i - 1) && matchOccupants(i, i + 1))
-      else
-        return (matchOccupants(i, i - 1) && matchOccupants(i, i - 2))
-    }; // end of horizontalMatch()
-
-    const diagonalMatch = (i) => {
-      let flag = false;
-
-      [ // list of diagonal winning positions
-        [0, 4, 8],
-        [2, 4, 6]
+    const winSets = [
+      [ // index 0
+        [1, 2], // horizontal win
+        [3, 6], // vertical win
+        [4, 8]  // diagonal win
+      ],
+      [ // index 1
+        [0, 2], // horizontal win
+        [4, 7]  // vertical win
+      ],
+      [ // index 2
+        [0, 1], // horizontal win
+        [5, 8], // vertical win
+        [4, 6]  // diagonal win
+      ],
+      [ // index 3
+        [4, 5], // horizontal win
+        [0, 6], // vertical win
+      ],
+      [ // index 4
+        [3, 5], // horizontal win
+        [1, 7], // vertical win
+        [0, 8], // diagonal win
+        [2, 6]  // diagonal win
+      ],
+      [ // index 5
+        [3, 4], // horizontal win
+        [2, 8]  // vertical win
+      ],
+      [ // index 6
+        [7, 8], // horizontal win
+        [0, 3], // vertical win
+        [4, 2]  // diagonal win
+      ],
+      [ // index 7
+        [6, 8], // horizontal win
+        [1, 4]  // vertical win
+      ],
+      [ // index 8
+        [6, 7], // horizontal win
+        [2, 5], // vertical win
+        [0, 4]  // diagonal win
       ]
-        .forEach(winPos => {
-          if (!flag && (winPos.find(index => index === i) !== undefined))
-            flag = matchOccupants(winPos[0], winPos[1]) && matchOccupants(winPos[0], winPos[2]);
-        });
+    ];
 
-      return flag;
-    };
+    let flag = false;
 
-    if (verticalMatch(i) || horizontalMatch(i) || diagonalMatch(i)) setWinner(state[i]);
+    winSets[i].forEach(pos => {
+        if (!flag)
+          flag = matchOccupants(i, pos[0]) && matchOccupants(i, pos[1]);
+    });
+
+    if (flag)
+      setWinner(state[i]);
   };
 
   useEffect(() => {
@@ -73,7 +83,7 @@ const Board = () => {
       else if (moveCount === 9)
         setIsMatchEnd(true);
     }
-  }, [moveCount, prevIndex, winner]);
+  }, [moveCount, winner]);
 
   const handleSquareClick = (i) => {
     // updating the values required for match status updation
