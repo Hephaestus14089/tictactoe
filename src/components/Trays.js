@@ -68,11 +68,23 @@ const MidRightTray = (props) => {
   );
 };
 
-const LowerTray = () => {
+const LowerTray = ({ handleClick }) => {
   /*
    * TODO:
    * - new match
    */
+  return (
+    <div
+      className="lowerTray"
+    >
+      <button
+        className="newMatch"
+        onClick={handleClick}
+      >
+        New Match
+      </button>
+    </div>
+  )
 };
 
 export { UpperTray, LowerTray, MidRightTray };

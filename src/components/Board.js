@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Square from './Square';
-import { MidRightTray } from './Trays';
+import { LowerTray, MidRightTray } from './Trays';
 
 const Board = () => {
 
@@ -12,6 +12,15 @@ const Board = () => {
   const [moveCount, setMoveCount] = useState(0);
   const [isMatchEnd, setIsMatchEnd] = useState(false);
   const [winner, setWinner] = useState(null);
+
+  const newMatch = () => {
+    setState(Array(9).fill(null));
+    setPrevIndex(null);
+    setNextPlayer(startingPlayer);
+    setMoveCount(0);
+    setIsMatchEnd(false);
+    setWinner(null);
+  };
 
   const checkWin = (i) => {
 
@@ -153,6 +162,7 @@ const Board = () => {
         isMatchEnd={isMatchEnd}
         winner={winner}
       />
+      <LowerTray handleClick={() => {newMatch();}}/>
     </>
   );
 };
