@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Square from './Square';
-import { LowerTray, MidRightTray } from './Trays';
+import RightTray from './Trays';
 
 const Board = () => {
 
@@ -155,14 +155,14 @@ const Board = () => {
   return (
     <>
       {board}
-      <MidRightTray
+      <RightTray
         moves={moveCount}
         starter={startingPlayer}
         nextPlayer={nextPlayer}
         isMatchEnd={isMatchEnd}
         winner={winner}
+        newMatch={newMatch}
       />
-      <LowerTray handleClick={() => {newMatch();}}/>
     </>
   );
 };

@@ -5,9 +5,9 @@ const UpperTray = () => {
    */
 };
 
-const MidRightTray = (props) => {
+export default function RightTray(props) {
 
-  const { moves, starter, nextPlayer, isMatchEnd, winner } = props;
+  const { moves, starter, nextPlayer, isMatchEnd, winner, newMatch } = props;
 
   const getMoves = () => {
     let movesX = 0;
@@ -42,49 +42,52 @@ const MidRightTray = (props) => {
 
   return (
     <div
-      className="midRightTray"
+      className="rightTray"
       style={{
         'marginLeft': "60px",
-        'padding': "14px 40px",
-        'border': "3px dotted #000"
+        'display': "flex",
+        'flexDirection': "column",
+        'alignItems': "center"
       }}
     >
-      <div className="moves">
-        <h1><u>Moves</u></h1>
-        <h2>Total: {moves}</h2>
-        <h2>X: {movesX}</h2>
-        <h2>O: {movesO}</h2>
-      </div>
       <div
-        className="status"
+        className="scoreBoard"
         style={{
-          'paddingTop': "0px",
-          'borderTop': "3px dotted #000"
+          'padding': "14px 40px",
+          'border': "3px dotted #000"
         }}
       >
-        <h2>{status}</h2>
+        <div className="moves">
+          <h1><u>Moves</u></h1>
+          <h2>Total: {moves}</h2>
+          <h2>X: {movesX}</h2>
+          <h2>O: {movesO}</h2>
+        </div>
+        <div
+          className="status"
+          style={{
+            'paddingTop': "0px",
+            'borderTop': "3px dotted #000"
+          }}
+        >
+          <h2>{status}</h2>
+        </div>
+      </div>
+      <div
+        className="newMatch"
+        style={{ 'marginTop': "15px" }}
+      >
+        <button
+          onClick={newMatch}
+          style={{
+            'height': "40px",
+            'width': "100px",
+            'fontSize': "15px"
+          }}
+        >
+          New Match
+        </button>
       </div>
     </div>
   );
 };
-
-const LowerTray = ({ handleClick }) => {
-  /*
-   * TODO:
-   * - new match
-   */
-  return (
-    <div
-      className="lowerTray"
-    >
-      <button
-        className="newMatch"
-        onClick={handleClick}
-      >
-        New Match
-      </button>
-    </div>
-  )
-};
-
-export { UpperTray, LowerTray, MidRightTray };
