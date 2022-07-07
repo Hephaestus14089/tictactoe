@@ -1,8 +1,7 @@
-import './App.css';
 import Board from './components/Board';
 
 const style = {
-  'marginTop': "15%",
+  'marginTop': "10%",
   'display': "flex",
   'justifyContent': "center",
   'alignItems': "center"
