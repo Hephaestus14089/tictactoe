@@ -1,3 +1,6 @@
+import { useContext } from 'react';
+import MatchContext from '../Context';
+
 const style = {
   'display': "inline-block",
   'verticalAlign': "middle",
@@ -15,8 +18,10 @@ const style = {
 
 const Square = (props) => {
 
+  const isMatchEnd = useContext(MatchContext).isMatchEnd;
+
   const isClickable = () => {
-    if (!props.isMatchEnd && props.occupant === null)
+    if (!isMatchEnd && props.occupant === null)
       return true;
     return false;
   };

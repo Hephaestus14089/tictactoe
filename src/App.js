@@ -1,7 +1,7 @@
 import Board from './components/Board';
 
 const style = {
-  'marginTop': "10%",
+  'paddingTop': "8%",
   'display': "flex",
   'justifyContent': "center",
   'alignItems': "center"

@@ -1,35 +1,10 @@
-const UpperTray = () => {
-  /*
-   * TODO:
-   * - dark/light mode
-   */
-};
+import { useContext } from 'react';
+import MatchContext from '../Context'
 
-export default function RightTray(props) {
+const RightTray = ({ newMatch, startingPlayer }) => {
 
-  const { moves, starter, nextPlayer, isMatchEnd, winner, newMatch } = props;
-
-  const getMoves = () => {
-    let movesX = 0;
-    let movesO = 0;
-
-    if (moves % 2 === 0) {
-      movesX = Math.trunc(moves / 2);
-      movesO = movesX;
-    }
-    else {
-      if (starter === 'X') {
-        movesO = moves / 2 - 0.5;
-        movesX = movesO + 1;
-      }
-      else {
-        movesX = moves / 2 - 0.5;
-        movesO = movesX + 1;
-      }
-    } // end of outer if-else
-
-    return [movesX, movesO];
-  };
+  const { movesX, movesO, nextPlayer, isMatchEnd, winner } = useContext(MatchContext);
+  const movesTotal = movesX + movesO;
 
   const getStatus = () => {
     if (isMatchEnd)
@@ -37,7 +12,6 @@ export default function RightTray(props) {
     return `Next Player: ${nextPlayer}`;
   };
 
-  const [movesX, movesO] = getMoves();
   const status = getStatus();
 
   return (
@@ -59,7 +33,7 @@ export default function RightTray(props) {
       >
         <div className="moves">
           <h1><u>Moves</u></h1>
-          <h2>Total: {moves}</h2>
+          <h2>Total: {movesTotal}</h2>
           <h2>X: {movesX}</h2>
           <h2>O: {movesO}</h2>
         </div>
@@ -91,3 +65,5 @@ export default function RightTray(props) {
     </div>
   );
 };
+
+export default RightTray;
