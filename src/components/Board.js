@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Square from './Square';
 import RightTray from './Trays';
+import MatchContext from '../Context';
 
 const Board = () => {
 
@@ -10,6 +11,8 @@ const Board = () => {
   const [prevIndex, setPrevIndex] = useState(null);
   const [nextPlayer, setNextPlayer] = useState(startingPlayer);
   const [moveCount, setMoveCount] = useState(0);
+  const [movesX, setMovesX] = useState(0);
+  const [movesO, setMovesO] = useState(0);
   const [isMatchEnd, setIsMatchEnd] = useState(false);
   const [winner, setWinner] = useState(null);
 
@@ -18,6 +21,8 @@ const Board = () => {
     setPrevIndex(null);
     setNextPlayer(startingPlayer);
     setMoveCount(0);
+    setMovesX(0);
+    setMovesO(0);
     setIsMatchEnd(false);
     setWinner(null);
   };
@@ -97,6 +102,10 @@ const Board = () => {
   const handleSquareClick = (i) => {
     // updating the values required for match status updation
     setMoveCount(moveCount + 1);
+    if (nextPlayer === 'X')
+      setMovesX(movesX + 1);
+    else
+      setMovesO(movesO + 1);
     // modifying the state of the array representing the board
     let newState = [...state];
     newState[i] = nextPlayer;
@@ -112,7 +121,6 @@ const Board = () => {
       <Square
         key={i}
         occupant={state[i]}
-        isMatchEnd={isMatchEnd}
         onClick={() => {handleSquareClick(i);}}
       />
     );
@@ -154,15 +162,22 @@ const Board = () => {
   const board = createBoard();
   return (
     <>
-      {board}
-      <RightTray
-        moves={moveCount}
-        starter={startingPlayer}
-        nextPlayer={nextPlayer}
-        isMatchEnd={isMatchEnd}
-        winner={winner}
-        newMatch={newMatch}
-      />
+      <MatchContext.Provider
+        value={{
+          state,
+          prevIndex,
+          nextPlayer,
+          movesX,
+          movesO,
+          isMatchEnd,
+          winner
+        }}
+      >
+        {board}
+        <RightTray
+          newMatch={newMatch}
+        />
+      </MatchContext.Provider>
     </>
   );
 };
