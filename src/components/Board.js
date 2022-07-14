@@ -151,10 +151,34 @@ const Board = () => {
 
     return (
       <div
-        className="board"
-        style={{ 'margin': "0", 'padding': "0" }}
-     >
-        {rows}
+        className="leftTray"
+        style={{
+          'display': "flex",
+          'flexDirection': "column",
+          'alignItems': "center"
+        }}
+      >
+        <div
+          className="board"
+          style={{ 'margin': "0", 'padding': "0" }}
+        >
+          {rows}
+        </div>
+        <div
+          className="toogleTheme"
+          style={{ 'marginTop': "15px" }}
+        >
+          <button
+            // onClick={newMatch}
+            style={{
+              'height': "40px",
+              'width': "100px",
+              'fontSize': "15px"
+            }}
+          >
+            Dark Mode
+          </button>
+        </div>
       </div>
     );
   };
