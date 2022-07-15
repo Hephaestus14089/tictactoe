@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Square from './Square';
 import RightTray from './Trays';
-import MatchContext from '../Context';
+import { MatchContext, ThemeContext } from '../Context';
 
 const Board = () => {
 
@@ -15,6 +15,8 @@ const Board = () => {
   const [movesO, setMovesO] = useState(0);
   const [isMatchEnd, setIsMatchEnd] = useState(false);
   const [winner, setWinner] = useState(null);
+
+  const { theme, toogleTheme } = useContext(ThemeContext);
 
   const newMatch = () => {
     setState(Array(9).fill(null));
@@ -169,7 +171,7 @@ const Board = () => {
           style={{ 'marginTop': "15px" }}
         >
           <button
-            // onClick={newMatch}
+            onClick={toogleTheme}
             style={{
               'height': "40px",
               'width': "100px",

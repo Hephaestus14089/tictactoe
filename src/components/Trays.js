@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import MatchContext from '../Context';
+import { MatchContext } from '../Context';
 
 const RightTray = ({ newMatch, startingPlayer }) => {
 

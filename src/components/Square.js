@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import MatchContext from '../Context';
+import { MatchContext } from '../Context';
 
 const style = {
   'display': "inline-block",

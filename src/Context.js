@@ -10,4 +10,10 @@ const MatchContext = createContext({
   winner: null
 });
 
-export default MatchContext;
+const ThemeContext = createContext({
+  theme: 'light',
+  toogleTheme: () => {}
+});
+
+// export { MatchContext, ThemeContext };
+export { MatchContext, ThemeContext };
