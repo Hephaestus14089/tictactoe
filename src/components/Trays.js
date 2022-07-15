@@ -56,7 +56,8 @@ const RightTray = ({ newMatch, startingPlayer }) => {
           style={{
             'height': "40px",
             'width': "100px",
-            'fontSize': "15px"
+            'fontSize': "15px",
+            'cursor': "pointer"
           }}
         >
           New Match

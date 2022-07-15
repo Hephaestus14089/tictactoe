@@ -175,10 +175,11 @@ const Board = () => {
             style={{
               'height': "40px",
               'width': "100px",
-              'fontSize': "15px"
+              'fontSize': "15px",
+              'cursor': "pointer"
             }}
           >
-            Dark Mode
+            {theme === 'light' ? "Dark Mode" : "Light Mode"}
           </button>
         </div>
       </div>
