@@ -1,10 +1,12 @@
 import { useContext } from 'react';
-import { MatchContext } from '../Context';
+import { MatchContext, ThemeContext } from '../Context';
 
 const RightTray = ({ newMatch, startingPlayer }) => {
 
   const { movesX, movesO, nextPlayer, isMatchEnd, winner } = useContext(MatchContext);
   const movesTotal = movesX + movesO;
+
+  const { fgColor } = useContext(ThemeContext);
 
   const getStatus = () => {
     if (isMatchEnd)
@@ -28,7 +30,8 @@ const RightTray = ({ newMatch, startingPlayer }) => {
         className="scoreBoard"
         style={{
           'padding': "14px 40px",
-          'border': "3px dotted #000"
+          'borderColor': fgColor,
+          'border': "3px dotted"
         }}
       >
         <div className="moves">
@@ -41,7 +44,8 @@ const RightTray = ({ newMatch, startingPlayer }) => {
           className="status"
           style={{
             'paddingTop': "0px",
-            'borderTop': "3px dotted #000"
+            'borderColor': fgColor,
+            'borderTop': "3px dotted"
           }}
         >
           <h2>{status}</h2>

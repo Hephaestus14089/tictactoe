@@ -11,7 +11,9 @@ const MatchContext = createContext({
 });
 
 const ThemeContext = createContext({
-  theme: 'light',
+  theme: '',
+  bgColor: '',
+  fgColor: '',
   toogleTheme: () => {}
 });
 

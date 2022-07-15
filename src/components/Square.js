@@ -1,9 +1,11 @@
 import { useContext } from 'react';
 import { MatchContext } from '../Context';
+import { ThemeContext } from '../Context';
 
 const Square = (props) => {
 
-  const isMatchEnd = useContext(MatchContext).isMatchEnd;
+  const { isMatchEnd } = useContext(MatchContext);
+  const { bgColor, fgColor } = useContext(ThemeContext);
 
   const isClickable = () => {
     if (!isMatchEnd && props.occupant === null)
@@ -18,13 +20,13 @@ const Square = (props) => {
     'verticalAlign': "middle",
     'height': "100px",
     'width': "100px",
-    'backgroundColor': "#fff",
+    'backgroundColor': bgColor,
     'border': "3px solid",
-    'borderColor': "#000",
+    'borderColor': fgColor,
     'margin': "0",
     'padding': "0",
     'fontSize': "80px",
-    'color': "#000",
+    'color': fgColor,
     'textAlign': "center",
     'cursor': cursor
   };

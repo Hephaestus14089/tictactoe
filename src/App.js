@@ -5,19 +5,29 @@ import { ThemeContext } from './Context';
 function App() {
 
   const [ theme, setTheme ] = useState('light');
+  const [ bgColor, setBgColor ] = useState('#fff');
+  const [ fgColor, setFgColor ] = useState('#000');
 
   const toogleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light');
+    if (theme === 'light') {
+      setTheme('dark');
+      setBgColor('#282c34');
+      setFgColor('#61dafb');
+    }
+    else {
+      setTheme('light');
+      setBgColor('#fff');
+      setFgColor('#000');
+    }
   };
 
-  const bgColor = (theme === 'dark') ? 'black' : '#fff';
-
   const style = {
-    'paddingTop': "8%",
+    'height': "100vh",
     'display': "flex",
     'justifyContent': "center",
     'alignItems': "center",
-    'backgroundColor': bgColor
+    'backgroundColor': bgColor,
+    'color': fgColor
   };
 
 
