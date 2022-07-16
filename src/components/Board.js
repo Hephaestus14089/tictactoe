@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import Square from './Square';
 import RightTray from './Trays';
+import FeatureButton from './FeatureButton';
 import { MatchContext, ThemeContext } from '../Context';
 
 const Board = () => {
@@ -170,17 +171,10 @@ const Board = () => {
           className="toogleTheme"
           style={{ 'marginTop': "15px" }}
         >
-          <button
+          <FeatureButton
+            text={theme === 'light' ? "Dark Mode" : "Light Mode"}
             onClick={toogleTheme}
-            style={{
-              'height': "40px",
-              'width': "100px",
-              'fontSize': "15px",
-              'cursor': "pointer"
-            }}
-          >
-            {theme === 'light' ? "Dark Mode" : "Light Mode"}
-          </button>
+          />
         </div>
       </div>
     );

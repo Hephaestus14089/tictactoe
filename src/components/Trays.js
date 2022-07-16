@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { MatchContext, ThemeContext } from '../Context';
+import FeatureButton from './FeatureButton';
 
 const RightTray = ({ newMatch, startingPlayer }) => {
 
@@ -55,17 +56,10 @@ const RightTray = ({ newMatch, startingPlayer }) => {
         className="newMatch"
         style={{ 'marginTop': "15px" }}
       >
-        <button
+        <FeatureButton
+          text={"New Match"}
           onClick={newMatch}
-          style={{
-            'height': "40px",
-            'width': "100px",
-            'fontSize': "15px",
-            'cursor': "pointer"
-          }}
-        >
-          New Match
-        </button>
+        />
       </div>
     </div>
   );
