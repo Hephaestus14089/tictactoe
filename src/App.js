@@ -1,5 +1,5 @@
 import Board from './components/Board';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ThemeContext } from './Context';
 import useThemeDetector from './customHooks/useThemeDetector';
 
@@ -16,22 +16,28 @@ const themes = {
 
 function App() {
 
-  const [ theme, setTheme ] = useState(useThemeDetector());
+  const [ theme, setTheme ] = useThemeDetector();
   const [ bgColor, setBgColor ] = useState(themes[theme]['bgColor']);
   const [ fgColor, setFgColor ] = useState(themes[theme]['fgColor']);
 
   const toogleTheme = () => {
-    if (theme === 'light') {
-      setTheme('dark');
+    setTheme(theme === 'dark' ? 'light' : 'dark');
+  };
+
+  const adjustColors = () => {
+    if (theme === 'dark') {
       setBgColor(themes['dark']['bgColor']);
       setFgColor(themes['dark']['fgColor']);
     }
     else {
-      setTheme('light');
       setBgColor(themes['light']['bgColor']);
       setFgColor(themes['light']['fgColor']);
     }
   };
+
+ useEffect(() => {
+   adjustColors();
+ }, [theme]);
 
   const style = {
     'height': "100vh",

@@ -11,11 +11,10 @@ const MatchContext = createContext({
 });
 
 const ThemeContext = createContext({
-  theme: '',
-  bgColor: '',
-  fgColor: '',
-  toogleTheme: () => {}
+  theme: null,
+  bgColor: null,
+  fgColor: null,
+  toogleTheme: null
 });
 
-// export { MatchContext, ThemeContext };
 export { MatchContext, ThemeContext };
